@@ -18,6 +18,7 @@ url_biology = "https://en.wikipedia.org/wiki/Special:RandomInCategory/Biology"
 url_politics = "https://en.wikipedia.org/wiki/Special:RandomInCategory/Politics"
 
 documents = 0
+url_list = []
 
 while documents < 30:
 	
@@ -32,8 +33,12 @@ while documents < 30:
 		
 	if(is_category(response.url)):
 		continue
+	
+	elif(response.url in url_list):
+		continue
 
 	else:
+		url_list.append(response.url)
 		soup = BeautifulSoup(response.text, "html.parser")
 		p = soup.find('p')
 		#print(p)
@@ -59,6 +64,7 @@ while documents < 30:
 		print('------------------------------------------------------')
 		documents += 1
 
+#print(url_list)
 #print(soup.find(id="content").get_text())
 #print(soup.get_text())
 	
