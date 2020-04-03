@@ -34,7 +34,7 @@ while documents < 30:
 	if(is_category(response.url)):
 		continue
 	
-	elif(response.url in url_list):
+	if(response.url in url_list):
 		continue
 
 	else:
