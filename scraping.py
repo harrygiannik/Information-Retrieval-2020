@@ -19,24 +19,32 @@ url_politics = "https://en.wikipedia.org/wiki/Special:RandomInCategory/Politics"
 
 documents = 0
 url_list = []
+coprus = []
 
-while documents < 30:
+while documents < 6000:
 	
-	if documents < 10:
-		response = requests.get(url_computers)
-	
-	elif documents >= 10 and documents < 20:
-		response = requests.get(url_biology)
-	
-	elif documents >= 20 and documents < 30:
+	'''
+	if documents < 2000:
 		response = requests.get(url_politics)
-		
-	if(is_category(response.url)):
-		continue
+		if documents == 1000:
+			print('1000 docs')
 	
-	if(response.url in url_list):
-		continue
+	elif documents >= 2000 and documents < 4000:
+		response = requests.get(url_biology)
+		if documents == 2000:
+			print('2000 docs')
+	
+	else :
+		if documents == 4000:
+			print('4000 docs')
+		response = requests.get(url_computers)
+	'''
+	#################### URL for RANDOM ARTICLE ###########################
+	response = requests.get('https://en.wikipedia.org/wiki/Special:Random')
+	#################### URL for RANDOM ARTICLE ###########################	
 
+	if((is_category(response.url) or (response.url in url_list))):
+		continue
 	else:
 		url_list.append(response.url)
 		soup = BeautifulSoup(response.text, "html.parser")
@@ -59,10 +67,12 @@ while documents < 30:
 			"text": text
 		}
 		
-		y = json.dumps(x)
-		print(y)
-		print('------------------------------------------------------')
+		coprus.append(x)
 		documents += 1
+		print(documents)
+#y = json.dumps(coprus)
+with open('corpus.json', 'w') as outfile:
+    json.dump(coprus, outfile)
 
 #print(url_list)
 #print(soup.find(id="content").get_text())

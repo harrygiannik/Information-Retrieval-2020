@@ -1,4 +1,4 @@
 # Information-Retrieval-2020
 
 ## TODO
-#### Save data in json file
+#### Modify scaper to have extra articles for specific categories
