@@ -2,4 +2,4 @@
 
 ## TODO
 
-Start with the indexing **asap**
+Test the index and create the search package
