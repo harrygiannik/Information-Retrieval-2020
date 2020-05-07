@@ -20,7 +20,7 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
-import org.omg.CORBA.PRIVATE_MEMBER;
+//import org.omg.CORBA.PRIVATE_MEMBER;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
@@ -137,5 +137,5 @@ public class IndexCreator {
 		
 		iWriter.close();
 		
-	}	
+	}
 }
