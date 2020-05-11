@@ -162,9 +162,6 @@ public class IndexCreator {
 	 *	
 	 */
 		
-		System.out.println("numDocs: " + iReader.numDocs());
-		System.out.println(iReader.document(10));
-		
 		IndexSearcher iSearcher = new IndexSearcher(iReader);
 		QueryParser parser = new QueryParser("text", analyzer);
 		Query query = parser.parse("Credlin");
