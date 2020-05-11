@@ -15,8 +15,16 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
@@ -90,6 +98,9 @@ public class IndexCreator {
 		document.add(textField);
 		// TODO Test this
 		//System.out.println(document.getValues(arg0));
+		//TEST : System.out.println(document.getFields()); ---> DONE
+		
+
 		return document;
 	}
 	
@@ -113,7 +124,7 @@ public class IndexCreator {
 	 * TODO Change method so it isn't main
 	 * 
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ParseException {
 		
 		// Prepare useful object
 		
@@ -131,11 +142,40 @@ public class IndexCreator {
 		IndexWriterConfig config = new IndexWriterConfig(analyzer);
 		IndexWriter iWriter = new IndexWriter(directory, config);
 		
+		/*
+		 * deleteAll() until there is no main in IndexCreator
+		 */
+		iWriter.deleteAll();
+		
 		for (int index = 0; index < documentsList.size(); index++){
 			iWriter.addDocument(documentsList.get(index));
 		}
-		
 		iWriter.close();
 		
+		DirectoryReader iReader = DirectoryReader.open(directory);
+	/*
+	 * 
+	 * 
+		System.out.println("numDocs: " + iReader.numDocs());
+		System.out.println(iReader.document(10));
+	 *
+	 *	
+	 */
+		
+		System.out.println("numDocs: " + iReader.numDocs());
+		System.out.println(iReader.document(10));
+		
+		IndexSearcher iSearcher = new IndexSearcher(iReader);
+		QueryParser parser = new QueryParser("text", analyzer);
+		Query query = parser.parse("Credlin");
+		TopDocs topDocs = iSearcher.search(query, 6000);
+		ScoreDoc[] hits = topDocs.scoreDocs;//iSearcher.search(query, 6000).scoreDocs;
+		for(int i = 0; i < hits.length; i++){
+			Document hitDoc = iSearcher.doc(hits[i].doc);
+			System.out.println(hitDoc.getField("title"));
+		}
+		System.out.println("Found: " + hits.length);
+		iReader.close();
+		directory.close();
 	}
 }
