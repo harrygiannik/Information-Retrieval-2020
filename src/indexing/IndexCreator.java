@@ -13,15 +13,19 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.document.FieldType;
+import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
@@ -76,26 +80,10 @@ public class IndexCreator {
 	private Document getDocument(Article article) throws IOException{
 		Document document = new Document();
 		
-		FieldType linkFT = new FieldType();
-		FieldType titleFT = new FieldType();
-		FieldType textFT = new FieldType();
+		document.add(new TextField("link", article.getLink(), Store.YES));
+		document.add(new TextField("title", article.getTitle(), Store.YES));
+		document.add(new TextField("text", article.getText(), Store.YES));
 		
-		linkFT.setStored(true);
-		linkFT.setTokenized(false);
-		
-		titleFT.setStored(true);
-		titleFT.setTokenized(true);
-		
-		textFT.setStored(true);
-		textFT.setTokenized(true);
-		
-		Field linkField = new Field("link", article.getLink(), linkFT);
-		Field titleField = new Field("title", article.getTitle(), titleFT);
-		Field textField = new Field("text", article.getText(), textFT);
-		
-		document.add(linkField);
-		document.add(titleField);
-		document.add(textField);
 		// TODO Test this
 		//System.out.println(document.getValues(arg0));
 		//TEST : System.out.println(document.getFields()); ---> DONE
@@ -156,15 +144,25 @@ public class IndexCreator {
 	/*
 	 * 
 	 * 
-		System.out.println("numDocs: " + iReader.numDocs());
-		System.out.println(iReader.document(10));
+		
 	 *
 	 *	
 	 */
 		
+		System.out.println("numDocs: " + iReader.numDocs());
+		System.out.println(iReader.document(10));
+		System.out.println("--------------------------");
+		
 		IndexSearcher iSearcher = new IndexSearcher(iReader);
+		
+		/*PhraseQuery.Builder builder = new PhraseQuery.Builder();
+		builder.add(new Term("text", "surname"));
+		PhraseQuery phraseQuery = builder.build();
+		System.out.println("phraseQuery: " + phraseQuery.toString());
+		*/
 		QueryParser parser = new QueryParser("text", analyzer);
-		Query query = parser.parse("Credlin");
+		Query query = parser.parse("hitler");
+		System.out.println(query.toString());
 		TopDocs topDocs = iSearcher.search(query, 6000);
 		ScoreDoc[] hits = topDocs.scoreDocs;//iSearcher.search(query, 6000).scoreDocs;
 		for(int i = 0; i < hits.length; i++){
