@@ -2,4 +2,11 @@
 
 ## TODO
 
-Test the index and create the search package
+* Complete QueryCreator with the following cases:
+	* Single __&__ to __AND__
+	* Check for __:__ and field before that
+	* Generic case
+* Create History class
+* Create Sorting class
+* Create a class in searching to close the reader and the directory
+* Controller

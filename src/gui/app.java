@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 
-public class app {
+class app {
 
 	protected Shell shlWikipediaSearchEngine;
 	private Text txtPleaseInsertYour;

@@ -24,6 +24,8 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.Query;
@@ -84,7 +86,7 @@ public class IndexCreator {
 		document.add(new TextField("title", article.getTitle(), Store.YES));
 		document.add(new TextField("text", article.getText(), Store.YES));
 		
-		// TODO Test this
+		//  Test this
 		//System.out.println(document.getValues(arg0));
 		//TEST : System.out.println(document.getFields()); ---> DONE
 		
@@ -108,8 +110,8 @@ public class IndexCreator {
 		return documents;
 	}
 	/*
-	 * 
-	 * TODO Change method so it isn't main
+	 * 	TODO
+	 *  Change method so it isn't main
 	 * 
 	 */
 	public static void main(String[] args) throws IOException, ParseException {
@@ -141,33 +143,38 @@ public class IndexCreator {
 		iWriter.close();
 		
 		DirectoryReader iReader = DirectoryReader.open(directory);
-	/*
-	 * 
-	 * 
-		
-	 *
-	 *	
-	 */
-		
+	
 		System.out.println("numDocs: " + iReader.numDocs());
-		System.out.println(iReader.document(10));
+		//System.out.println(iReader.document(10));
 		System.out.println("--------------------------");
 		
 		IndexSearcher iSearcher = new IndexSearcher(iReader);
-		
-		/*PhraseQuery.Builder builder = new PhraseQuery.Builder();
-		builder.add(new Term("text", "surname"));
+		/*
+		 * PHRASE QUERY
+		 */
+		PhraseQuery.Builder builder = new PhraseQuery.Builder();
+		builder.add(new Term("text", "comput"));
+		//builder.add(new Term("text", "hitler"));
 		PhraseQuery phraseQuery = builder.build();
 		System.out.println("phraseQuery: " + phraseQuery.toString());
-		*/
-		QueryParser parser = new QueryParser("text", analyzer);
-		Query query = parser.parse("hitler");
-		System.out.println(query.toString());
-		TopDocs topDocs = iSearcher.search(query, 6000);
+		///////////////////////
+		
+		/*
+		 * BOOLEAN with AND, OR,  WILDCARD and TERM
+		 */
+		QueryParser parserText = new QueryParser("text", analyzer);
+		QueryParser parserTitle = new QueryParser("title", analyzer);
+
+		Query queryText = parserText.parse("\"computer science\"");
+		Query queryTitle = parserTitle.parse("science");
+		System.out.println(parserText.getAnalyzer());
+		System.out.println(queryText.toString());
+		///////////////////////
+		TopDocs topDocs = iSearcher.search(queryText, 6000);
 		ScoreDoc[] hits = topDocs.scoreDocs;//iSearcher.search(query, 6000).scoreDocs;
 		for(int i = 0; i < hits.length; i++){
 			Document hitDoc = iSearcher.doc(hits[i].doc);
-			System.out.println(hitDoc.getField("title"));
+			//System.out.println(hitDoc.getField("text"));
 		}
 		System.out.println("Found: " + hits.length);
 		iReader.close();
