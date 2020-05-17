@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -34,6 +35,16 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
+
+import org.apache.lucene.search.highlight.Formatter;
+import org.apache.lucene.search.highlight.Fragmenter;
+import org.apache.lucene.search.highlight.Highlighter;
+import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
+import org.apache.lucene.search.highlight.QueryScorer;
+import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
+import org.apache.lucene.search.highlight.SimpleSpanFragmenter;
+import org.apache.lucene.search.highlight.TextFragment;
+import org.apache.lucene.search.highlight.TokenSources;
 //import org.omg.CORBA.PRIVATE_MEMBER;
 
 import com.google.gson.*;
@@ -114,7 +125,7 @@ public class IndexCreator {
 	 *  Change method so it isn't main
 	 * 
 	 */
-	public static void main(String[] args) throws IOException, ParseException {
+	public static void main(String[] args) throws IOException, ParseException, InvalidTokenOffsetsException {
 		
 		// Prepare useful object
 		
@@ -165,16 +176,40 @@ public class IndexCreator {
 		QueryParser parserText = new QueryParser("text", analyzer);
 		QueryParser parserTitle = new QueryParser("title", analyzer);
 
-		Query queryText = parserText.parse("\"computer science\"");
+		Query queryText = parserText.parse("computer science");
 		Query queryTitle = parserTitle.parse("science");
 		System.out.println(parserText.getAnalyzer());
 		System.out.println(queryText.toString());
 		///////////////////////
-		TopDocs topDocs = iSearcher.search(queryText, 6000);
+		TopDocs topDocs = iSearcher.search(queryText, 10);
 		ScoreDoc[] hits = topDocs.scoreDocs;//iSearcher.search(query, 6000).scoreDocs;
+		
+		/* Highlight*/
+		
+		SimpleHTMLFormatter formatter = new SimpleHTMLFormatter("<mark>", "</mark>");
+	    Highlighter highlighter = new Highlighter(formatter, new QueryScorer(queryText));
+		
+	    /* Highlight*/
+	    
 		for(int i = 0; i < hits.length; i++){
 			Document hitDoc = iSearcher.doc(hits[i].doc);
-			//System.out.println(hitDoc.getField("text"));
+			
+			/* Highlight*/
+			String text = hitDoc.get("text");
+			TokenStream tokenStream = TokenSources.getAnyTokenStream(iSearcher.getIndexReader(), 
+					hits[i].doc, "text", analyzer);
+		     TextFragment[] frag = highlighter.getBestTextFragments(tokenStream,
+		    		 text, false, 10);//highlighter.getBestFragments(tokenStream, text, 3, "...");
+		     for (int j = 0; j < frag.length; j++) {
+		         if ((frag[j] != null) && (frag[j].getScore() > 0)) {
+		           System.out.println((frag[j].toString()));
+		         }
+		       }
+		     
+		     System.out.println();
+		     /* Highlight*/			
+		    
+		     //System.out.println(hitDoc.getField("text"));
 		}
 		System.out.println("Found: " + hits.length);
 		iReader.close();
