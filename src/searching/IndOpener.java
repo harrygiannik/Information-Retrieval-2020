@@ -9,7 +9,7 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
-class IndOpener {
+public class IndOpener {
 	private DirectoryReader iReader;
 	private Directory directory;
 	

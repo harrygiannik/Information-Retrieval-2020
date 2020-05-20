@@ -11,7 +11,7 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 
-class IndSearcher {
+public class IndSearcher {
 	private IndexSearcher iSearcher;
 	private Query query;
 	

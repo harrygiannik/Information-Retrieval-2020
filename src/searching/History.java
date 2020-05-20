@@ -10,7 +10,7 @@ import java.util.Stack;
 
 import org.apache.lucene.store.FSDirectory;
 
-class History {
+public class History {
 	private boolean isEnabled;
 	private Stack<String> queryHistory = new Stack<String>();
 	
