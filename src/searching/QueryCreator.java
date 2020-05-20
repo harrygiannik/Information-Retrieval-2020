@@ -1,14 +1,17 @@
 package searching;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.PhraseQuery;
+import org.apache.lucene.search.Query;
 
 class QueryCreator {
 	private QueryParser parser;
 	private Analyzer analyzer;
 	private String searchField;
 	private String userInput;
+	private boolean isEnabled;
 	
 	/*
 	 * CONSTRUCTOR
@@ -45,9 +48,25 @@ class QueryCreator {
 	public void setUserInput(String userInput) {
 		this.userInput = userInput;
 	}
+	public boolean isEnabled() {
+		return isEnabled;
+	}
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+	
 	
 	/*
-	 * QUERY CREATION TODO the method
+	 * QUERY CREATION if Title btn is pressed
 	 */
+	public Query addField() throws ParseException {
+		if (isEnabled() && !(getUserInput().contains("title:"))){
+			QueryParser parserTitle = new QueryParser("title", analyzer);
+			Query queryTitle = parserTitle.parse(getUserInput());
+			return queryTitle;
+		}
+		return null;
+	}
+	
 	
 }

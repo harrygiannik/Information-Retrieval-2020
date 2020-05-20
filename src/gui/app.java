@@ -3,9 +3,21 @@ package gui;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.SWTResourceManager;
+
+
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Text;
+
+import java.awt.Font;
+import java.awt.font.TextAttribute;
+import java.text.AttributedString;
+
+import javax.jws.soap.SOAPBinding.Style;
+import javax.swing.JTextPane;
+import javax.swing.text.html.HTMLDocument.HTMLReader.HiddenAction;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
@@ -55,8 +67,15 @@ class app {
 		shlWikipediaSearchEngine.setText("Wikipedia Search Engine");
 		shlWikipediaSearchEngine.setLayout(null);
 		
+		/*
+		Font font = new Font("Segoe UI", Font.BOLD, 9);
+		AttributedString as = new AttributedString("Hi from blabal");
+		as.addAttribute(TextAttribute.FONT, font);
+		*/
+		
 		txtQuery = new Text(shlWikipediaSearchEngine, SWT.NONE);
 		txtQuery.setBounds(100, 62, 881, 29);
+		txtQuery.setText("hello --computer science-- uoi");
 		
 		Button btnDefaultSearch = new Button(shlWikipediaSearchEngine, SWT.NONE);
 		btnDefaultSearch.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.NORMAL));

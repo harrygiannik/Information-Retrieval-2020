@@ -165,7 +165,7 @@ public class IndexCreator {
 		 */
 		PhraseQuery.Builder builder = new PhraseQuery.Builder();
 		builder.add(new Term("text", "comput"));
-		//builder.add(new Term("text", "hitler"));
+		//builder.add(new Term("text", "stalin"));
 		PhraseQuery phraseQuery = builder.build();
 		System.out.println("phraseQuery: " + phraseQuery.toString());
 		///////////////////////
@@ -193,7 +193,6 @@ public class IndexCreator {
 	    
 		for(int i = 0; i < hits.length; i++){
 			Document hitDoc = iSearcher.doc(hits[i].doc);
-			
 			/* Highlight*/
 			String text = hitDoc.get("text");
 			TokenStream tokenStream = TokenSources.getAnyTokenStream(iSearcher.getIndexReader(), 
@@ -205,7 +204,7 @@ public class IndexCreator {
 		           System.out.println((frag[j].toString()));
 		         }
 		       }
-		     
+		     //<mark>hahah</mark> vagelis
 		     System.out.println();
 		     /* Highlight*/			
 		    
