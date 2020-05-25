@@ -11,7 +11,6 @@ public class Controller {
 	private String results;
 	private String history;
 	private HistoryController historyController;
-	private IndOpenerController indOpenerController;
 	private IndSearcherController indSearcherController;
 	private QueryCreatorController queryCreatorController;
 	private SorterController sorterController;
@@ -98,14 +97,6 @@ public class Controller {
 
 	public void setHistoryController(HistoryController historyController) {
 		this.historyController = historyController;
-	}
-
-	public IndOpenerController getIndOpenerController() {
-		return indOpenerController;
-	}
-
-	public void setIndOpenerController(IndOpenerController indOpenerController) {
-		this.indOpenerController = indOpenerController;
 	}
 
 	public IndSearcherController getIndSearcherController() {
