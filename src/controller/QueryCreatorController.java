@@ -54,6 +54,7 @@ public class QueryCreatorController {
 	public Query createQuery(String query) throws ParseException {
 		setQuery(query);
 		if (queryCreator.isEnabled()){
+			queryCreator.setSearchField("title");
 			if (query.startsWith("title:")) {
 				queryCreator.setParser(new QueryParser("title", analyzer));
 				return queryCreator.getParser().parse(query.substring(6));
@@ -63,6 +64,7 @@ public class QueryCreatorController {
 			}
 		}
 		else {
+			queryCreator.setSearchField("text");
 			queryCreator.setParser(new QueryParser("text", analyzer));
 			return queryCreator.getParser().parse(getQuery());
 		}

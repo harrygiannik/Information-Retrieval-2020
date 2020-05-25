@@ -56,15 +56,15 @@ public class Sorter {
 	 * SORTING methods
 	 */
 	
-	public Document[] scoreSort() throws IOException {
-		for (int i = 0; i < hits.length; i++){
+	public ScoreDoc[] scoreSort() throws IOException {
+		/*for (int i = 0; i < hits.length; i++){
 			Document hitDoc = iSearcher.doc(hits[i].doc);
 			sortedResults[i] = hitDoc;
-		}
-		return sortedResults;
+		}*/
+		return hits;
 	}
 	
-	public Document[] alphabeticalSort() throws IOException {
+	public ScoreDoc[] alphabeticalSort() throws IOException {
 		for (int i = 0; i < hits.length; i++) 
         {
             for (int j = i + 1; j < hits.length; j++) { 
@@ -77,14 +77,14 @@ public class Sorter {
             }
         }
 		
-		for (int i = 0; i < hits.length; i++){
+		/*for (int i = 0; i < hits.length; i++){
 			Document hitDoc = iSearcher.doc(hits[i].doc);
 			sortedResults[i] = hitDoc;
-		}
-		return sortedResults;
+		}*/
+		return hits;
 	}
 	
-	public Document[] sizeSort() throws IOException {
+	public ScoreDoc[] sizeSort() throws IOException {
 		for (int i = 0; i < hits.length; i++) 
         {
             for (int j = i + 1; j < hits.length; j++) { 
@@ -98,10 +98,10 @@ public class Sorter {
             }
         }
 		
-		for (int i = 0; i < hits.length; i++){
+		/*for (int i = 0; i < hits.length; i++){
 			Document hitDoc = iSearcher.doc(hits[i].doc);
 			sortedResults[i] = hitDoc;
-		}
-		return sortedResults;
+		}*/
+		return hits;
 	}
 }

@@ -2,7 +2,7 @@
 
 ## TODO
 
-* Complete QueryCreator with the following cases:
+* ~~Complete QueryCreator with the following cases:~~
 	* ~~Single __&__ to __AND__~~
 	* ~~Check for __:__ and field before that~~
 	* ~~Check if title btn and append title: before query~~
@@ -11,3 +11,4 @@
 * ~~Create Sorting class~~
 * Create a class in searching to close the reader and the directory
 * Controller
+* Create Event Handlers and Help pop up

@@ -199,14 +199,21 @@ public class IndexCreator {
 					hits[i].doc, "text", analyzer);
 		     TextFragment[] frag = highlighter.getBestTextFragments(tokenStream,
 		    		 text, false, 10);//highlighter.getBestFragments(tokenStream, text, 3, "...");
-		     for (int j = 0; j < frag.length; j++) {
-		         if ((frag[j] != null) && (frag[j].getScore() > 0)) {
-		           System.out.println((frag[j].toString()));
-		         }
-		       }
-		     System.out.println();
-		     /* Highlight*/			
+		     
+			String fragNum1 = frag[0].toString();
+			
+		    System.out.println("--------------------");
+			System.out.println("Frag1: "+fragNum1);
+			System.out.println("--------------------");
 		    
+		    for (int j = 0; j < frag.length; j++) {
+				if ((frag[j] != null) && (frag[j].getScore() > 0)) {
+			       //System.out.println((frag[j].toString()));
+			    }
+		    }
+		    System.out.println();
+		 /* Highlight*/			
+
 		     //System.out.println(hitDoc.getField("text"));
 		}
 		System.out.println("Found: " + hits.length);
