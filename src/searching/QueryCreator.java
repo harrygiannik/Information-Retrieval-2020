@@ -6,12 +6,12 @@ import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.Query;
 
-class QueryCreator {
+public class QueryCreator {
 	private QueryParser parser;
 	private Analyzer analyzer;
 	private String searchField;
 	private String userInput;
-	private boolean isEnabled;
+	private boolean isEnabled; /* Check if title based search is clicked  TODO onClick set this true*/
 	
 	/*
 	 * CONSTRUCTOR
@@ -59,13 +59,10 @@ class QueryCreator {
 	/*
 	 * QUERY CREATION if Title btn is pressed
 	 */
-	public Query addField() throws ParseException {
-		if (isEnabled() && !(getUserInput().contains("title:"))){
-			QueryParser parserTitle = new QueryParser("title", analyzer);
-			Query queryTitle = parserTitle.parse(getUserInput());
-			return queryTitle;
-		}
-		return null;
+	public Query addTitleField() throws ParseException {
+		QueryParser parserTitle = new QueryParser("title", analyzer);
+		Query queryTitle = parserTitle.parse(getUserInput());
+		return queryTitle;
 	}
 	
 	

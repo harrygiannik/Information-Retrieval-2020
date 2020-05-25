@@ -13,11 +13,16 @@ public class Sorter {
 	/*
 	 * CONSTRUCTOR
 	 */
+	
 	public Sorter(ScoreDoc[] hits, Document[] sortedResults, IndexSearcher iSearcher) {
 		super();
 		this.hits = hits;
 		this.sortedResults = sortedResults;
 		this.iSearcher = iSearcher;
+	}
+
+	public Sorter() {
+		super();
 	}
 
 	/*

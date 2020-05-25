@@ -165,7 +165,7 @@ public class IndexCreator {
 		 */
 		PhraseQuery.Builder builder = new PhraseQuery.Builder();
 		builder.add(new Term("text", "comput"));
-		//builder.add(new Term("text", "stalin"));
+		//builder.add(new Term("text", "chomsky"));
 		PhraseQuery phraseQuery = builder.build();
 		System.out.println("phraseQuery: " + phraseQuery.toString());
 		///////////////////////
