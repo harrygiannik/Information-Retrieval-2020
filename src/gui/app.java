@@ -10,9 +10,13 @@ import org.eclipse.swt.widgets.Text;
 
 import java.awt.Font;
 import java.awt.font.TextAttribute;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.AttributedString;
 
 import javax.jws.soap.SOAPBinding.Style;
+import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.text.html.HTMLDocument.HTMLReader.HiddenAction;
 
@@ -26,7 +30,6 @@ class app {
 
 	protected Shell shlWikipediaSearchEngine;
 	private Text txtQuery;
-	private Text txtResults;
 	private Text txtHistory;
 
 	/**
@@ -44,8 +47,9 @@ class app {
 
 	/**
 	 * Open the window.
+	 * @throws IOException 
 	 */
-	public void open() {
+	public void open() throws IOException {
 		Display display = Display.getDefault();
 		createContents();
 		shlWikipediaSearchEngine.open();
@@ -59,8 +63,9 @@ class app {
 
 	/**
 	 * Create contents of the window.
+	 * @throws MalformedURLException 
 	 */
-	protected void createContents() {
+	protected void createContents() throws MalformedURLException {
 		shlWikipediaSearchEngine = new Shell();
 		shlWikipediaSearchEngine.setBackground(SWTResourceManager.getColor(176, 224, 230));
 		shlWikipediaSearchEngine.setSize(1080, 720);
@@ -72,10 +77,9 @@ class app {
 		AttributedString as = new AttributedString("Hi from blabal");
 		as.addAttribute(TextAttribute.FONT, font);
 		*/
-		
 		txtQuery = new Text(shlWikipediaSearchEngine, SWT.NONE);
 		txtQuery.setBounds(100, 62, 881, 29);
-		txtQuery.setText("hello --computer science-- uoi");
+		txtQuery.setText("blah blah");
 		
 		Button btnDefaultSearch = new Button(shlWikipediaSearchEngine, SWT.NONE);
 		btnDefaultSearch.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.NORMAL));
@@ -107,9 +111,6 @@ class app {
 		btnSearch.setBounds(492, 158, 93, 29);
 		btnSearch.setText("Search");
 		
-		txtResults = new Text(shlWikipediaSearchEngine, SWT.NONE);
-		txtResults.setBounds(100, 206, 675, 374);
-		
 		txtHistory = new Text(shlWikipediaSearchEngine, SWT.NONE);
 		txtHistory.setFont(SWTResourceManager.getFont("Ubuntu", 11, SWT.NORMAL));
 		txtHistory.setBounds(781, 206, 200, 374);
@@ -138,6 +139,10 @@ class app {
 		lblPleaseInsertYour.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
 		lblPleaseInsertYour.setBounds(100, 36, 172, 20);
 		lblPleaseInsertYour.setText("Please insert your query");
+		
+		StyledText txtResults = new StyledText(shlWikipediaSearchEngine, SWT.BORDER);
+		txtResults.setFont(SWTResourceManager.getFont("Ubuntu", 11, SWT.NORMAL));
+		txtResults.setBounds(100, 206, 672, 374);
 
 	}
 }

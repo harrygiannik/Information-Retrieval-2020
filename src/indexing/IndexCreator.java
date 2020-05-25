@@ -204,7 +204,6 @@ public class IndexCreator {
 		           System.out.println((frag[j].toString()));
 		         }
 		       }
-		     //<mark>hahah</mark> vagelis
 		     System.out.println();
 		     /* Highlight*/			
 		    
