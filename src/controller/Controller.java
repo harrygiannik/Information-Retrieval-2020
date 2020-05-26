@@ -1,5 +1,9 @@
 package controller;
 
+import java.util.Stack;
+
+import org.apache.lucene.analysis.tokenattributes.FlagsAttribute;
+
 public class Controller {
 	private String userInput;
 	private boolean defaultSearch;
@@ -9,7 +13,7 @@ public class Controller {
 	private boolean sizeSort;
 	private boolean alphabeticalSort;
 	private String results;
-	private String history;
+	private Stack<String> history;
 	private HistoryController historyController;
 	private IndSearcherController indSearcherController;
 	private QueryCreatorController queryCreatorController;
@@ -83,11 +87,11 @@ public class Controller {
 		this.results = results;
 	}
 
-	public String getHistory() {
+	public Stack<String> getHistory() {
 		return history;
 	}
 
-	public void setHistory(String history) {
+	public void setHistory(Stack<String> history) {
 		this.history = history;
 	}
 
@@ -123,6 +127,49 @@ public class Controller {
 		this.sorterController = sorterController;
 	}
 
-	
+	public void initParams() {
+		/*
+		 * Setting Index
+		 */
+		setIndSearcherController(new IndSearcherController());
+		indSearcherController.openIndex();
+		indSearcherController.initSearcher();
+		
+		/*
+		 * Set history
+		 */
+		setHistoryController(new HistoryController());
+		historyController.getHistory().initHistory();
+		setHistory(historyController.getHistory().getQueryHistory());
+		
+		/*
+		 * Set default sorter
+		 */
+		setSorterController(new SorterController());
+		sorterController.setType("score");
+		sorterController.setIndSearcherController(getIndSearcherController());
+		sorterController.getSorter().setiSearcher(getIndSearcherController().getIndSearcher().getiSearcher());
+		setScoreSort(true);
+		setAlphabeticalSort(false);
+		setSizeSort(false);
+		
+		/*
+		 * Set query creator, analyzer
+		 */
+		setQueryCreatorController(new QueryCreatorController());
+		queryCreatorController.getQueryCreator().setAnalyzer(queryCreatorController.getAnalyzer());
+		setDefaultSearch(true);
+		setTitleSearch(false);
+	}
 	
 }
+
+
+
+
+
+
+
+
+
+

@@ -9,6 +9,6 @@
 	* ~~Generic case~~
 * ~~Create History class~~
 * ~~Create Sorting class~~
-* Create a class in searching to close the reader and the directory
+* Create a method to close the reader and the directory && write history in disk(when X is pressed)
 * Controller
-* Create Event Handlers and Help pop up
+* Create Event Handlers ~~and Help pop up~~

@@ -45,7 +45,7 @@ public class History {
 	}
 	
 	/*
-	 * MANAGE HIISTORY methods
+	 * MANAGE HISTORY methods
 	 */
 	public void initHistory() {
 		if (isEnabled()) {

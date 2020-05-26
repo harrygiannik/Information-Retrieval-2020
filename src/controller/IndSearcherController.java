@@ -9,7 +9,7 @@ import searching.IndOpener;
 import searching.IndSearcher;
 
 public class IndSearcherController {
-	private IndOpener indOpener = new IndOpener();
+	private IndOpener indOpener;
 	private IndSearcher indSearcher;
 	
 	public IndSearcherController(IndOpener indOpener, IndSearcher indSearcher) {
@@ -20,6 +20,7 @@ public class IndSearcherController {
 
 	public IndSearcherController() {
 		super();
+		this.indOpener = new IndOpener();
 	}
 
 	public IndOpener getIndOpener() {

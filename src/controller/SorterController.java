@@ -53,7 +53,7 @@ public class SorterController {
 	}
 	
 	public String getType() {
-		return results;
+		return type;
 	}
 
 	public void setType(String type) {

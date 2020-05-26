@@ -30,7 +30,6 @@ public class QueryCreatorController {
 		return queryCreator;
 	}
 
-
 	public void setQueryCreator(QueryCreator queryCreator) {
 		this.queryCreator = queryCreator;
 	}

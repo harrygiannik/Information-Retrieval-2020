@@ -64,6 +64,4 @@ public class QueryCreator {
 		Query queryTitle = parserTitle.parse(getUserInput());
 		return queryTitle;
 	}
-	
-	
 }
