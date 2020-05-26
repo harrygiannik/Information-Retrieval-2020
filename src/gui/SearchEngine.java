@@ -74,7 +74,7 @@ public class SearchEngine {
 		JPanel panel = new JPanel();
 		panel.setForeground(new Color(128, 128, 128));
 		panel.setBackground(new Color(220, 220, 220));
-		panel.setBounds(202, 103, 679, 477);
+		panel.setBounds(202, 103, 679, 508);
 		frmWikipediaSearchEngine.getContentPane().add(panel);
 		panel.setLayout(null);
 		panel.setBorder(new LineBorder(Color.gray));
@@ -82,6 +82,7 @@ public class SearchEngine {
 		panel.setVisible(false);
 		
 		JButton closeHelpBtn = new JButton("Close");
+		closeHelpBtn.setFont(new Font("Dialog", Font.PLAIN, 13));
 		closeHelpBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -100,7 +101,7 @@ public class SearchEngine {
 			}
 		});
 		closeHelpBtn.setBackground(new Color(255, 255, 255));
-		closeHelpBtn.setBounds(550, 437, 117, 25);
+		closeHelpBtn.setBounds(550, 470, 117, 25);
 		panel.add(closeHelpBtn);
 		closeHelpBtn.setVisible(false);
 		
@@ -108,10 +109,10 @@ public class SearchEngine {
 		JTextPane txtpnSupportedSearchingmethodstntcontent = new JTextPane();
 		txtpnSupportedSearchingmethodstntcontent.setForeground(new Color(0, 0, 128));
 		txtpnSupportedSearchingmethodstntcontent.setBackground(new Color(220, 220, 220));
-		txtpnSupportedSearchingmethodstntcontent.setFont(new Font("Chandas", Font.PLAIN, 5));
+		txtpnSupportedSearchingmethodstntcontent.setFont(new Font("Dialog", Font.PLAIN, 10));
 		txtpnSupportedSearchingmethodstntcontent.setContentType("text/html");
 		txtpnSupportedSearchingmethodstntcontent.setText("Supported searching methods:<br><br>&emsp;Content Search: Searches the article's main body content.<br><br>&emsp;Title Search: Searches in article's title.<br><br><br>Supported sorting methods:<br><br>&emsp;Sort by Score: Results are sorted by their relevance to the search query.<br><br>&emsp;Sort by Size: Results are sorted based on the article size.<br><br>&emsp;Alphabetical Sort: Results are sorted alphabetically by title.<br><br><br>Query history:<br><br>&emsp;Show history: Retrieves queries from past searches.<br><br><br>Supported queries:<br><br>&emsp;The engine supports keyword, boolean, wildcard and field based queries.<br><br>&emsp;The acceptable fields are title and text.");
-		txtpnSupportedSearchingmethodstntcontent.setBounds(72, 12, 528, 450);
+		txtpnSupportedSearchingmethodstntcontent.setBounds(72, 12, 528, 483);
 		panel.add(txtpnSupportedSearchingmethodstntcontent);
 		txtpnSupportedSearchingmethodstntcontent.setVisible(false);
 		txtpnSupportedSearchingmethodstntcontent.setEditable(false);
@@ -124,48 +125,49 @@ public class SearchEngine {
 		userInput.setColumns(10);
 		
 		JButton contentSearchBtn = new JButton("Content Search");
-		contentSearchBtn.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		contentSearchBtn.setBackground(new Color(255, 255, 255));
+		contentSearchBtn.setFont(new Font("Dialog", Font.PLAIN, 11));
+		contentSearchBtn.setBackground(Color.WHITE);
 		contentSearchBtn.setBounds(100, 105, 110, 29);
 		this.contentSearchBtn = contentSearchBtn;
 		frmWikipediaSearchEngine.getContentPane().add(contentSearchBtn);
 		
 		JButton titleSearchBtn = new JButton("Title Search");
-		titleSearchBtn.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		titleSearchBtn.setFont(new Font("Dialog", Font.PLAIN, 11));
 		titleSearchBtn.setBackground(new Color(255, 255, 255));
 		titleSearchBtn.setBounds(248, 105, 110, 29);
 		this.titleSearchBtn = titleSearchBtn;
 		frmWikipediaSearchEngine.getContentPane().add(titleSearchBtn);
 		
 		JButton historyBtn = new JButton("Show History");
-		historyBtn.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		historyBtn.setFont(new Font("Dialog", Font.PLAIN, 11));
 		historyBtn.setBackground(new Color(255, 255, 255));
 		historyBtn.setBounds(389, 105, 110, 29);
 		this.historyBtn = historyBtn;
 		frmWikipediaSearchEngine.getContentPane().add(historyBtn);
 		
 		JButton scoreSortBtn = new JButton("Sort by Score");
-		scoreSortBtn.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		scoreSortBtn.setFont(new Font("Dialog", Font.PLAIN, 11));
 		scoreSortBtn.setBackground(new Color(255, 255, 255));
 		scoreSortBtn.setBounds(576, 105, 110, 29);
 		this.scoreSortBtn = scoreSortBtn;
 		frmWikipediaSearchEngine.getContentPane().add(scoreSortBtn);
 		
 		JButton sizeSortBtn = new JButton("Sort by Size");
-		sizeSortBtn.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		sizeSortBtn.setFont(new Font("Dialog", Font.PLAIN, 11));
 		sizeSortBtn.setBackground(new Color(255, 255, 255));
 		sizeSortBtn.setBounds(728, 105, 110, 29);
 		this.sizeSortBtn = sizeSortBtn;
 		frmWikipediaSearchEngine.getContentPane().add(sizeSortBtn);
 		
 		JButton abSortBtn = new JButton("Alphabetical Sort");
-		abSortBtn.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		abSortBtn.setFont(new Font("Dialog", Font.PLAIN, 9));
 		abSortBtn.setBackground(new Color(255, 255, 255));
 		abSortBtn.setBounds(871, 105, 110, 29);
 		this.abSortBtn = abSortBtn;
 		frmWikipediaSearchEngine.getContentPane().add(abSortBtn);
 		
 		JButton searchBtn = new JButton("Search");
+		searchBtn.setFont(new Font("Dialog", Font.PLAIN, 13));
 		searchBtn.setBackground(new Color(255, 255, 255));
 		searchBtn.setBounds(492, 158, 93, 29);
 		this.searchBtn = searchBtn;
@@ -201,12 +203,14 @@ public class SearchEngine {
 		frmWikipediaSearchEngine.getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Created as a course project for the Information Retrieval course in UoI");
+		lblNewLabel_2.setFont(new Font("Dialog", Font.BOLD, 15));
 		lblNewLabel_2.setBackground(new Color(204, 255, 255));
 		lblNewLabel_2.setForeground(new Color(128, 128, 128));
-		lblNewLabel_2.setBounds(638, 644, 412, 16);
+		lblNewLabel_2.setBounds(552, 644, 498, 16);
 		frmWikipediaSearchEngine.getContentPane().add(lblNewLabel_2);
 		
 		JButton helpBtn = new JButton("Help");
+		helpBtn.setFont(new Font("Dialog", Font.PLAIN, 13));
 		helpBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
