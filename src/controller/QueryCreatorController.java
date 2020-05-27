@@ -55,17 +55,20 @@ public class QueryCreatorController {
 		if (queryCreator.isEnabled()){
 			queryCreator.setSearchField("title");
 			if (query.startsWith("title:")) {
+				queryCreator.setUserInput(query.substring(6));
 				queryCreator.setParser(new QueryParser("title", analyzer));
-				return queryCreator.getParser().parse(query.substring(6));
+				return queryCreator.getParser().parse(queryCreator.getUserInput());
 			}
 			else {
+				queryCreator.setUserInput(query);
 				return queryCreator.addTitleField();
 			}
 		}
 		else {
 			queryCreator.setSearchField("text");
 			queryCreator.setParser(new QueryParser("text", analyzer));
-			return queryCreator.getParser().parse(getQuery());
+			queryCreator.setUserInput(getQuery());
+			return queryCreator.getParser().parse(queryCreator.getUserInput());
 		}
 	}
 }

@@ -21,6 +21,8 @@ import javax.swing.border.LineBorder;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 
 public class SearchEngine {
 
@@ -173,20 +175,27 @@ public class SearchEngine {
 		this.searchBtn = searchBtn;
 		frmWikipediaSearchEngine.getContentPane().add(searchBtn);
 		
-		JTextPane resultsArea = new JTextPane();
-		resultsArea.setContentType("text/html");
-		resultsArea.setBounds(100, 206, 672, 374);
-		resultsArea.setBorder(new LineBorder(Color.gray));
-		resultsArea.setEditable(false);
-		this.resultsArea = resultsArea;
-		frmWikipediaSearchEngine.getContentPane().add(resultsArea);
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(100, 206, 672, 374);
+		frmWikipediaSearchEngine.getContentPane().add(scrollPane_1);
 		
-		JTextPane historyArea = new JTextPane();
-		historyArea.setBounds(781, 206, 200, 374);
-		historyArea.setBorder(new LineBorder(Color.gray));
-		historyArea.setEditable(false);
-		this.historyArea = historyArea;
-		frmWikipediaSearchEngine.getContentPane().add(historyArea);
+		JTextPane resultsArea_1 = new JTextPane();
+		scrollPane_1.setViewportView(resultsArea_1);
+		resultsArea_1.setContentType("text/html");
+		resultsArea_1.setBorder(new LineBorder(Color.gray));
+		resultsArea_1.setEditable(false);
+		this.resultsArea = resultsArea_1;
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(781, 206, 200, 374);
+		frmWikipediaSearchEngine.getContentPane().add(scrollPane);
+		
+		JTextPane historyArea_1 = new JTextPane();
+		scrollPane.setViewportView(historyArea_1);
+		historyArea_1.setContentType("text/html");
+		historyArea_1.setBorder(new LineBorder(Color.gray));
+		historyArea_1.setEditable(false);
+		this.historyArea = historyArea_1;
 		
 		JLabel lblNewLabel = new JLabel("Results");
 		lblNewLabel.setForeground(new Color(128, 128, 128));
@@ -224,8 +233,8 @@ public class SearchEngine {
 				sizeSortBtn.setEnabled(false);
 				abSortBtn.setEnabled(false);
 				searchBtn.setEnabled(false);
-				historyArea.setEnabled(false);
-				resultsArea.setEnabled(false);
+				historyArea_1.setEnabled(false);
+				resultsArea_1.setEnabled(false);
 				
 			}
 		});

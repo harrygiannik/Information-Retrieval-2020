@@ -57,10 +57,7 @@ public class Sorter {
 	 */
 	
 	public ScoreDoc[] scoreSort() throws IOException {
-		/*for (int i = 0; i < hits.length; i++){
-			Document hitDoc = iSearcher.doc(hits[i].doc);
-			sortedResults[i] = hitDoc;
-		}*/
+		
 		return hits;
 	}
 	
@@ -77,10 +74,6 @@ public class Sorter {
             }
         }
 		
-		/*for (int i = 0; i < hits.length; i++){
-			Document hitDoc = iSearcher.doc(hits[i].doc);
-			sortedResults[i] = hitDoc;
-		}*/
 		return hits;
 	}
 	
@@ -98,10 +91,6 @@ public class Sorter {
             }
         }
 		
-		/*for (int i = 0; i < hits.length; i++){
-			Document hitDoc = iSearcher.doc(hits[i].doc);
-			sortedResults[i] = hitDoc;
-		}*/
 		return hits;
 	}
 }

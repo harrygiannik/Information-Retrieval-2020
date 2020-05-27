@@ -160,12 +160,13 @@ public class IndexCreator {
 		System.out.println("--------------------------");
 		
 		IndexSearcher iSearcher = new IndexSearcher(iReader);
+		
 		/*
 		 * PHRASE QUERY
 		 */
 		PhraseQuery.Builder builder = new PhraseQuery.Builder();
 		builder.add(new Term("text", "comput"));
-		//builder.add(new Term("text", "chomsky"));
+		//builder.add(new Term("text", "emma goldman"));
 		PhraseQuery phraseQuery = builder.build();
 		System.out.println("phraseQuery: " + phraseQuery.toString());
 		///////////////////////

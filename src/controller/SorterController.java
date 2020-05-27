@@ -99,7 +99,7 @@ public class SorterController {
 		}
 	}
 	
-	private String castResults() throws IOException, InvalidTokenOffsetsException{
+	public String castResults() throws IOException, InvalidTokenOffsetsException{
 		ScoreDoc[] hits = selectType();
 		String result = "";
 		
@@ -117,9 +117,9 @@ public class SorterController {
 	    for(int i = 0; i < hits.length; i++){
 			Document hitDoc = getIndSearcherController().getIndSearcher().getiSearcher().doc(hits[i].doc);
 			result += hitDoc.get("title");
-			result += "\n";
+			result += "<br>";
 			result += hitDoc.get("link");
-			result += "\n";
+			result += "<br>";
 			TokenStream tokenStream = TokenSources.getAnyTokenStream(getIndSearcherController().getIndSearcher().getiSearcher().getIndexReader(), 
 					hits[i].doc, field, getQueryCreatorController().getAnalyzer());
 		    TextFragment[] frag = highlighter.getBestTextFragments(tokenStream, result, false, 6000);
@@ -129,7 +129,7 @@ public class SorterController {
 		    else {
 		    	result += frag[1].toString();
 			}
-		    result += "\n\n";
+		    result += "<br><br>";
 	    }
 		return result;
 	}

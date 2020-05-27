@@ -1,8 +1,14 @@
 package controller;
 
+import java.io.IOException;
 import java.util.Stack;
+import java.util.concurrent.BlockingDeque;
 
 import org.apache.lucene.analysis.tokenattributes.FlagsAttribute;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
 
 public class Controller {
 	private String userInput;
@@ -13,7 +19,7 @@ public class Controller {
 	private boolean sizeSort;
 	private boolean alphabeticalSort;
 	private String results;
-	private Stack<String> history;
+	private String historyContent;
 	private HistoryController historyController;
 	private IndSearcherController indSearcherController;
 	private QueryCreatorController queryCreatorController;
@@ -87,14 +93,6 @@ public class Controller {
 		this.results = results;
 	}
 
-	public Stack<String> getHistory() {
-		return history;
-	}
-
-	public void setHistory(Stack<String> history) {
-		this.history = history;
-	}
-
 	public HistoryController getHistoryController() {
 		return historyController;
 	}
@@ -126,6 +124,14 @@ public class Controller {
 	public void setSorterController(SorterController sorterController) {
 		this.sorterController = sorterController;
 	}
+	
+	public String getHistoryContent() {
+		return historyContent;
+	}
+
+	public void setHistoryContent(String historyContent) {
+		this.historyContent = historyContent;
+	}
 
 	public void initParams() {
 		/*
@@ -139,8 +145,8 @@ public class Controller {
 		 * Set history
 		 */
 		setHistoryController(new HistoryController());
-		historyController.getHistory().initHistory();
-		setHistory(historyController.getHistory().getQueryHistory());
+		historyController.startHistory();
+		setEnableHistory(false);
 		
 		/*
 		 * Set default sorter
@@ -161,7 +167,92 @@ public class Controller {
 		setDefaultSearch(true);
 		setTitleSearch(false);
 	}
+	/*
+	 * Searching type switching
+	 */
+	public void handleContentSearch() {
+		setDefaultSearch(true);
+		setTitleSearch(false);
+		sorterController.setSearchField("text");
+		queryCreatorController.getQueryCreator().setEnabled(false);
+	}
 	
+	public void handleTitleSearch() {
+		setTitleSearch(true);
+		setDefaultSearch(false);
+		sorterController.setSearchField("title");
+		queryCreatorController.getQueryCreator().setEnabled(true);
+	}
+	
+	/*
+	 * Sorting type switching
+	 */
+	public void handleScoreSort() {
+		setScoreSort(true);
+		sorterController.setType("score");
+		setSizeSort(false);
+		setAlphabeticalSort(false);
+	}
+	
+	public void handleSizeSort() {
+		setSizeSort(true);
+		sorterController.setType("size");
+		setScoreSort(false);
+		setAlphabeticalSort(false);
+	}
+	
+	public void handleAlphabeticalSort() {
+		setAlphabeticalSort(true);
+		sorterController.setType("abSort");
+		setScoreSort(false);
+		setSizeSort(false);
+	}
+	
+	/*
+	 * Pass the history Stack
+	 */
+	public String handleHistory() { //TODO disable history button after first click
+		setEnableHistory(true);
+		setHistoryContent("");
+		
+		for(int i = 0; i < historyController.getHistory().getQueryHistory().size(); i++){
+			historyContent += historyController.getHistory().getQueryHistory().get(i);
+			historyContent += "<br>";
+		}
+
+		return historyContent;
+	}
+	
+	public void saveHistory(){
+		historyController.saveHistory();
+	}
+	
+	public String handleSearch(String userInput) throws IOException, ParseException, InvalidTokenOffsetsException{
+		ScoreDoc[] hits;
+		setUserInput(userInput);
+		
+		if (titleSearch) {
+			indSearcherController.getIndSearcher().setQuery(queryCreatorController.createQuery(getUserInput()));
+			hits = indSearcherController.querySearchControl();
+		} else {
+			indSearcherController.getIndSearcher().setQuery(queryCreatorController.createQuery(getUserInput()));
+			hits = indSearcherController.querySearchControl();
+		}
+		
+		sorterController.setIndSearcherController(getIndSearcherController());
+		sorterController.setQueryCreatorController(getQueryCreatorController());
+		sorterController.getSorter().setiSearcher((sorterController.getIndSearcherController().getIndSearcher().getiSearcher()));
+		sorterController.getSorter().setHits(hits);
+		setResults(sorterController.castResults());
+		historyController.setNewQuery(userInput);
+		historyController.appendHistory();
+		
+		return getResults();
+	}
+	
+	/*public String enact(String caller){
+		
+	}*/
 }
 
 
