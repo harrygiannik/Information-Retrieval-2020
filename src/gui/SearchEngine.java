@@ -6,9 +6,13 @@ import javax.swing.JFrame;
 import java.awt.Color;
 import javax.swing.JTextField;
 
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+
+import controller.Controller;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -18,11 +22,15 @@ import java.awt.SystemColor;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
+import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 public class SearchEngine {
 
@@ -38,6 +46,8 @@ public class SearchEngine {
 	private JButton sizeSortBtn;
 	private JButton abSortBtn;
 	private JButton searchBtn;
+	private Controller controller;
+	private String retVal;
 
 	/**
 	 * Launch the application.
@@ -57,20 +67,54 @@ public class SearchEngine {
 
 	/**
 	 * Create the application.
+	 * @throws InvalidTokenOffsetsException 
+	 * @throws ParseException 
+	 * @throws IOException 
 	 */
-	public SearchEngine() {
+	public SearchEngine() throws IOException, ParseException, InvalidTokenOffsetsException {
+		this.controller = new Controller();
+		this.controller.enact("", null);
 		initialize();
+	}
+
+	public Controller getController() {
+		return controller;
+	}
+
+	public void setController(Controller controller) {
+		this.controller = controller;
+	}
+
+	public String getRetVal() {
+		return retVal;
+	}
+
+	public void setRetVal(String retVal) {
+		this.retVal = retVal;
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		//String retVal = null;
 		frmWikipediaSearchEngine = new JFrame();
+		frmWikipediaSearchEngine.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				try {
+					//String retVal = null;
+					setRetVal(getController().enact("Close", null));
+					System.exit(0);
+				} catch (IOException | ParseException | InvalidTokenOffsetsException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		frmWikipediaSearchEngine.getContentPane().setBackground(new Color(255, 255, 224));
 		frmWikipediaSearchEngine.setTitle("Wikipedia Search Engine");
 		frmWikipediaSearchEngine.setBounds(100, 100, 1080, 720);
-		frmWikipediaSearchEngine.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmWikipediaSearchEngine.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmWikipediaSearchEngine.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -127,6 +171,16 @@ public class SearchEngine {
 		userInput.setColumns(10);
 		
 		JButton contentSearchBtn = new JButton("Content Search");
+		contentSearchBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					setRetVal(getController().enact("Content Search", null));
+				} catch (IOException | ParseException | InvalidTokenOffsetsException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		contentSearchBtn.setFont(new Font("Dialog", Font.PLAIN, 11));
 		contentSearchBtn.setBackground(Color.WHITE);
 		contentSearchBtn.setBounds(100, 105, 110, 29);
@@ -134,6 +188,16 @@ public class SearchEngine {
 		frmWikipediaSearchEngine.getContentPane().add(contentSearchBtn);
 		
 		JButton titleSearchBtn = new JButton("Title Search");
+		titleSearchBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					setRetVal(getController().enact("Title Search", null));
+				} catch (IOException | ParseException | InvalidTokenOffsetsException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		titleSearchBtn.setFont(new Font("Dialog", Font.PLAIN, 11));
 		titleSearchBtn.setBackground(new Color(255, 255, 255));
 		titleSearchBtn.setBounds(248, 105, 110, 29);
@@ -141,6 +205,18 @@ public class SearchEngine {
 		frmWikipediaSearchEngine.getContentPane().add(titleSearchBtn);
 		
 		JButton historyBtn = new JButton("Show History");
+		historyBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					setRetVal(getController().enact("Show History", null));
+					historyArea.setText(getRetVal());
+					historyBtn.setEnabled(false);
+				} catch (IOException | ParseException | InvalidTokenOffsetsException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		historyBtn.setFont(new Font("Dialog", Font.PLAIN, 11));
 		historyBtn.setBackground(new Color(255, 255, 255));
 		historyBtn.setBounds(389, 105, 110, 29);
@@ -148,6 +224,16 @@ public class SearchEngine {
 		frmWikipediaSearchEngine.getContentPane().add(historyBtn);
 		
 		JButton scoreSortBtn = new JButton("Sort by Score");
+		scoreSortBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					setRetVal(getController().enact("Sort by Score", null));
+				} catch (IOException | ParseException | InvalidTokenOffsetsException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		scoreSortBtn.setFont(new Font("Dialog", Font.PLAIN, 11));
 		scoreSortBtn.setBackground(new Color(255, 255, 255));
 		scoreSortBtn.setBounds(576, 105, 110, 29);
@@ -155,6 +241,16 @@ public class SearchEngine {
 		frmWikipediaSearchEngine.getContentPane().add(scoreSortBtn);
 		
 		JButton sizeSortBtn = new JButton("Sort by Size");
+		sizeSortBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					setRetVal(getController().enact("Sort by Size", null));
+				} catch (IOException | ParseException | InvalidTokenOffsetsException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		sizeSortBtn.setFont(new Font("Dialog", Font.PLAIN, 11));
 		sizeSortBtn.setBackground(new Color(255, 255, 255));
 		sizeSortBtn.setBounds(728, 105, 110, 29);
@@ -162,6 +258,16 @@ public class SearchEngine {
 		frmWikipediaSearchEngine.getContentPane().add(sizeSortBtn);
 		
 		JButton abSortBtn = new JButton("Alphabetical Sort");
+		abSortBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					setRetVal(getController().enact("Alphabetical Sort", null));
+				} catch (IOException | ParseException | InvalidTokenOffsetsException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		abSortBtn.setFont(new Font("Dialog", Font.PLAIN, 9));
 		abSortBtn.setBackground(new Color(255, 255, 255));
 		abSortBtn.setBounds(871, 105, 110, 29);
@@ -169,6 +275,17 @@ public class SearchEngine {
 		frmWikipediaSearchEngine.getContentPane().add(abSortBtn);
 		
 		JButton searchBtn = new JButton("Search");
+		searchBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					setRetVal(getController().enact("Search", userInput.getText()));
+					resultsArea.setText(getRetVal());
+				} catch (IOException | ParseException | InvalidTokenOffsetsException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		searchBtn.setFont(new Font("Dialog", Font.PLAIN, 13));
 		searchBtn.setBackground(new Color(255, 255, 255));
 		searchBtn.setBounds(492, 158, 93, 29);

@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 import java.util.concurrent.BlockingDeque;
 
@@ -152,6 +154,7 @@ public class Controller {
 		 * Set default sorter
 		 */
 		setSorterController(new SorterController());
+		sorterController.setSearchField("text");
 		sorterController.setType("score");
 		sorterController.setIndSearcherController(getIndSearcherController());
 		sorterController.getSorter().setiSearcher(getIndSearcherController().getIndSearcher().getiSearcher());
@@ -250,9 +253,39 @@ public class Controller {
 		return getResults();
 	}
 	
-	/*public String enact(String caller){
-		
-	}*/
+	public String enact(String caller, String userInput) throws IOException, ParseException, InvalidTokenOffsetsException{
+		String retVal = null;
+		switch (caller) {
+		case "Content Search":
+			handleContentSearch();
+			break;
+		case "Title Search":
+			handleTitleSearch();
+			break;
+		case "Show History":
+			retVal = handleHistory();
+			break;
+		case "Sort by Score":
+			handleScoreSort();
+			break;
+		case "Sort by Size":
+			handleSizeSort();
+			break;
+		case "Alphabetical Sort":
+			handleAlphabeticalSort();
+			break;
+		case "Search":
+			retVal = handleSearch(userInput);
+			break;
+		case "Close":
+			saveHistory();
+			break;
+		default:
+			initParams();
+			break;
+		}
+		return retVal;
+	}
 }
 
 

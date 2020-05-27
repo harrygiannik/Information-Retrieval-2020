@@ -110,27 +110,63 @@ public class SorterController {
 	
 	private String highlighter(String field, ScoreDoc[] hits) throws IOException, InvalidTokenOffsetsException{
 		String result = "";
+		String fragResults = "";
 		
-		SimpleHTMLFormatter formatter = new SimpleHTMLFormatter("<mark>", "</mark>");
+		SimpleHTMLFormatter formatter = new SimpleHTMLFormatter("<b style = 'color: red'>", "</b>");
 	    Highlighter highlighter = new Highlighter(formatter, new QueryScorer(getIndSearcherController().getIndSearcher().getQuery()));
 	    
-	    for(int i = 0; i < hits.length; i++){
-			Document hitDoc = getIndSearcherController().getIndSearcher().getiSearcher().doc(hits[i].doc);
-			result += hitDoc.get("title");
-			result += "<br>";
-			result += hitDoc.get("link");
-			result += "<br>";
-			TokenStream tokenStream = TokenSources.getAnyTokenStream(getIndSearcherController().getIndSearcher().getiSearcher().getIndexReader(), 
-					hits[i].doc, field, getQueryCreatorController().getAnalyzer());
-		    TextFragment[] frag = highlighter.getBestTextFragments(tokenStream, result, false, 6000);
-		    if (!(frag[0] == null)) {
-		    	result += frag[0].toString();
-			}
-		    else {
-		    	result += frag[1].toString();
-			}
-		    result += "<br><br>";
-	    }
+	    if (field.equals("title")) {
+	    	 for(int i = 0; i < hits.length; i++){
+	 			Document hitDoc = getIndSearcherController().getIndSearcher().getiSearcher().doc(hits[i].doc);
+	 			fragResults = hitDoc.get(field);
+	 			TokenStream tokenStream = TokenSources.getAnyTokenStream(getIndSearcherController().getIndSearcher().getiSearcher().getIndexReader(), 
+	 					hits[i].doc, field, getQueryCreatorController().getAnalyzer());
+	 		    TextFragment[] frag = highlighter.getBestTextFragments(tokenStream, fragResults, false, 6000);
+	 		    if (!(frag[0] == null)) {
+	 		    	result += frag[0].toString();
+	 			}
+	 		    else {
+	 		    	result += frag[1].toString();
+	 			}
+	 		    
+	 		    result += "<br>";
+				result += "<a href='>";
+				result += hitDoc.get("link");
+				result += "'>";
+				result += hitDoc.get("link");
+				result += "</a>";
+	 		    result += "<br><br>";
+	 		    
+	 	    }
+		} else {
+			 for(int i = 0; i < hits.length; i++){
+					Document hitDoc = getIndSearcherController().getIndSearcher().getiSearcher().doc(hits[i].doc);
+					result += "<b>";
+					result += hitDoc.get("title");
+					result += "</b>";
+					result += "<br>";
+					result += "<a href='>";
+					result += hitDoc.get("link");
+					result += "'>";
+					result += hitDoc.get("link");
+					result += "</a>";
+					result += "<br>";
+					fragResults = hitDoc.get(field);
+					TokenStream tokenStream = TokenSources.getAnyTokenStream(getIndSearcherController().getIndSearcher().getiSearcher().getIndexReader(), 
+							hits[i].doc, field, getQueryCreatorController().getAnalyzer());
+				    TextFragment[] frag = highlighter.getBestTextFragments(tokenStream, fragResults, false, 6000);
+				    result += "&emsp;";
+				    if (!(frag[0] == null)) {
+				    	result += frag[0].toString();
+					}
+				    else {
+				    	result += frag[1].toString();
+					}
+				    result += "<br><br>";
+				    
+			    }
+		}
+	    
 		return result;
 	}
 }

@@ -55,7 +55,6 @@ public class History {
 				Stack<String> historyStack = new Stack<String>();
 				while (historyReader.hasNextLine()) {
 					String data = historyReader.nextLine();
-					System.out.println(data);
 					historyStack.push(data);
 				}
 				setQueryHistory(historyStack);
@@ -77,6 +76,7 @@ public class History {
 				FileWriter myWriter = new FileWriter("history.txt");
 				while (!(getQueryHistory().empty())){
 					myWriter.write(getQueryHistory().pop());
+					myWriter.write("\n");
 				}
 				myWriter.close();
 			} catch (IOException e) {
