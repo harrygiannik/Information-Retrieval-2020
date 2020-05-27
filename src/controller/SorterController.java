@@ -155,14 +155,14 @@ public class SorterController {
 					TokenStream tokenStream = TokenSources.getAnyTokenStream(getIndSearcherController().getIndSearcher().getiSearcher().getIndexReader(), 
 							hits[i].doc, field, getQueryCreatorController().getAnalyzer());
 				    TextFragment[] frag = highlighter.getBestTextFragments(tokenStream, fragResults, false, 6000);
-				    result += "&emsp;";
+				    result += "&emsp;...";
 				    if (!(frag[0] == null)) {
 				    	result += frag[0].toString();
 					}
 				    else {
 				    	result += frag[1].toString();
 					}
-				    result += "<br><br>";
+				    result += " ...<br><br>";
 				    
 			    }
 		}

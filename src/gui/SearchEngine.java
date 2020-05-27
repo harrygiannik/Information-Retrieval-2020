@@ -281,6 +281,7 @@ public class SearchEngine {
 				try {
 					setRetVal(getController().enact("Search", userInput.getText()));
 					resultsArea.setText(getRetVal());
+					resultsArea.setCaretPosition(0);
 				} catch (IOException | ParseException | InvalidTokenOffsetsException e) {
 					e.printStackTrace();
 				}
