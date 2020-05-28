@@ -145,7 +145,7 @@ public class SorterController {
 					result += hitDoc.get("title");
 					result += "</b>";
 					result += "<br>";
-					result += "<a href='>";
+					result += "<a href='";
 					result += hitDoc.get("link");
 					result += "'>";
 					result += hitDoc.get("link");

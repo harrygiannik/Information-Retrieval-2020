@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import java.awt.Color;
+import java.awt.Desktop;
+
 import javax.swing.JTextField;
 
 import org.apache.lucene.queryparser.classic.ParseException;
@@ -31,6 +33,10 @@ import javax.swing.JScrollPane;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.net.URISyntaxException;
+
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 
 public class SearchEngine {
 
@@ -163,7 +169,7 @@ public class SearchEngine {
 		txtpnSupportedSearchingmethodstntcontent.setVisible(false);
 		txtpnSupportedSearchingmethodstntcontent.setEditable(false);
 		this.txtpnSupportedSearchingmethodstntcontent = txtpnSupportedSearchingmethodstntcontent;
-		
+
 		userInput = new JTextField();
 		userInput.setBounds(100, 62, 881, 29);
 		userInput.setBorder(new LineBorder(Color.gray));
@@ -303,6 +309,23 @@ public class SearchEngine {
 		resultsArea_1.setBorder(new LineBorder(Color.gray));
 		resultsArea_1.setEditable(false);
 		this.resultsArea = resultsArea_1;
+		
+		resultsArea_1.addHyperlinkListener(new HyperlinkListener() {
+            @Override
+            public void hyperlinkUpdate(HyperlinkEvent e) {
+            	
+                if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+                    if (Desktop.isDesktopSupported()) {
+                        try {
+                        	Desktop.getDesktop().browse(java.net.URI.create(e.getDescription()));
+                        }
+                        catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }
+            }
+		});
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(781, 206, 200, 374);

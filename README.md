@@ -3,5 +3,6 @@
 ## TODO
 
 * Results count
-* Clickable link
+* "No results found"
+* ~~Clickable link~~
 * Report
