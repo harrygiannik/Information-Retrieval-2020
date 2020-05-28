@@ -2,7 +2,7 @@
 
 ## TODO
 
-* Results count
-* "No results found"
+* ~~Results count~~
+* ~~"No results found"~~
 * ~~Clickable link~~
 * Report

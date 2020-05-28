@@ -1,15 +1,9 @@
 package controller;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
-import java.util.concurrent.BlockingDeque;
 
-import org.apache.lucene.analysis.tokenattributes.FlagsAttribute;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
 
 public class Controller {
@@ -26,6 +20,7 @@ public class Controller {
 	private IndSearcherController indSearcherController;
 	private QueryCreatorController queryCreatorController;
 	private SorterController sorterController;
+	private String countOfResults;
 	
 	public Controller() {
 		super();
@@ -135,6 +130,14 @@ public class Controller {
 		this.historyContent = historyContent;
 	}
 
+	public String getCountOfResults() {
+		return countOfResults;
+	}
+
+	public void setCountOfResults(String countOfResults) {
+		this.countOfResults = countOfResults;
+	}
+
 	public void initParams() {
 		/*
 		 * Setting Index
@@ -214,7 +217,7 @@ public class Controller {
 	/*
 	 * Pass the history Stack
 	 */
-	public String handleHistory() { //TODO disable history button after first click
+	public String handleHistory() {
 		setEnableHistory(true);
 		setHistoryContent("");
 		
@@ -228,6 +231,7 @@ public class Controller {
 	
 	public void saveHistory(){
 		historyController.saveHistory();
+		
 	}
 	
 	public String handleSearch(String userInput) throws IOException, ParseException, InvalidTokenOffsetsException{
@@ -242,13 +246,19 @@ public class Controller {
 			hits = indSearcherController.querySearchControl();
 		}
 		
-		sorterController.setIndSearcherController(getIndSearcherController());
-		sorterController.setQueryCreatorController(getQueryCreatorController());
-		sorterController.getSorter().setiSearcher((sorterController.getIndSearcherController().getIndSearcher().getiSearcher()));
-		sorterController.getSorter().setHits(hits);
-		setResults(sorterController.castResults());
-		historyController.setNewQuery(userInput);
-		historyController.appendHistory();
+		setCountOfResults("" + hits.length);
+		
+		if (hits.length == 0) {
+			setResults("&emsp;Sorry &nbsp;&nbsp; &#128577;<br>&emsp;Nothing found");
+		} else {
+			sorterController.setIndSearcherController(getIndSearcherController());
+			sorterController.setQueryCreatorController(getQueryCreatorController());
+			sorterController.getSorter().setiSearcher((sorterController.getIndSearcherController().getIndSearcher().getiSearcher()));
+			sorterController.getSorter().setHits(hits);
+			setResults(sorterController.castResults());
+			historyController.setNewQuery(userInput);
+			historyController.appendHistory();
+		}
 		
 		return getResults();
 	}
@@ -287,13 +297,4 @@ public class Controller {
 		return retVal;
 	}
 }
-
-
-
-
-
-
-
-
-
 

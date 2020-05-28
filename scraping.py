@@ -19,7 +19,6 @@ while documents < 6000:
 	
 	#################### URL for RANDOM ARTICLE ###########################
 	response = requests.get('https://en.wikipedia.org/wiki/Special:Random')
-	#################### URL for RANDOM ARTICLE ###########################	
 
 	if((is_category(response.url) or (response.url in url_list))):
 		continue

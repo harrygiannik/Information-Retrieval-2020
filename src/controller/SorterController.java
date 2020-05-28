@@ -2,8 +2,6 @@ package controller;
 
 import java.io.IOException;
 
-import javax.xml.transform.Templates;
-
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.search.ScoreDoc;
@@ -20,8 +18,8 @@ public class SorterController {
 	private Sorter sorter;
 	private String results;
 	private String type;
-	private String searchField; //TODO set this in controller class
-	private IndSearcherController indSearcherController; //TODO set this in controller class
+	private String searchField;
+	private IndSearcherController indSearcherController;
 	private QueryCreatorController queryCreatorController; 
 
 	public SorterController() {
@@ -130,13 +128,12 @@ public class SorterController {
 	 			}
 	 		    
 	 		    result += "<br>";
-				result += "<a href='>";
+				result += "<a href='";
 				result += hitDoc.get("link");
 				result += "'>";
 				result += hitDoc.get("link");
 				result += "</a>";
 	 		    result += "<br><br>";
-	 		    
 	 	    }
 		} else {
 			 for(int i = 0; i < hits.length; i++){
@@ -163,7 +160,6 @@ public class SorterController {
 				    	result += frag[1].toString();
 					}
 				    result += " ...<br><br>";
-				    
 			    }
 		}
 	    

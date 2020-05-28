@@ -52,7 +52,4 @@ public class IndSearcherController {
 	public ScoreDoc[] querySearchControl() throws IOException {
 		return this.indSearcher.querySearch();
 	}
-	
-	
-	
 }

@@ -35,22 +35,20 @@ public class HistoryController {
 		this.newQuery = newQuery;
 	}
 	
-	// Has to be called immediately after the launch
 	public void startHistory() {
 		if (history.isEnabled()){
 			history.initHistory();
 		}
 	}
 	
-	// Check if button is pressedbefore call me
 	public Stack<String> returnHistory() {
 		return history.getQueryHistory();
 	}
-	// newQuery has to be set
+	
 	public void appendHistory() {
 		history.addQuery(newQuery);
 	}
-	// TODO add event listener in red close btn
+	
 	public void saveHistory() {
 		history.writeHistory();
 	}

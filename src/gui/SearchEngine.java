@@ -10,30 +10,22 @@ import javax.swing.JTextField;
 
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 
 import controller.Controller;
 
 import javax.swing.JButton;
 import java.awt.Font;
-import javax.swing.JTextArea;
 import javax.swing.JLabel;
-import java.awt.SystemColor;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
-import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
@@ -54,6 +46,7 @@ public class SearchEngine {
 	private JButton searchBtn;
 	private Controller controller;
 	private String retVal;
+	private JTextPane textPane;
 
 	/**
 	 * Launch the application.
@@ -103,13 +96,11 @@ public class SearchEngine {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		//String retVal = null;
 		frmWikipediaSearchEngine = new JFrame();
 		frmWikipediaSearchEngine.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
 				try {
-					//String retVal = null;
 					setRetVal(getController().enact("Close", null));
 					System.exit(0);
 				} catch (IOException | ParseException | InvalidTokenOffsetsException e) {
@@ -134,7 +125,7 @@ public class SearchEngine {
 		panel.setVisible(false);
 		
 		JButton closeHelpBtn = new JButton("Close");
-		closeHelpBtn.setFont(new Font("Dialog", Font.PLAIN, 13));
+		closeHelpBtn.setFont(new Font("Dialog", Font.BOLD, 13));
 		closeHelpBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -157,18 +148,17 @@ public class SearchEngine {
 		panel.add(closeHelpBtn);
 		closeHelpBtn.setVisible(false);
 		
-		
-		JTextPane txtpnSupportedSearchingmethodstntcontent = new JTextPane();
-		txtpnSupportedSearchingmethodstntcontent.setForeground(new Color(0, 0, 128));
-		txtpnSupportedSearchingmethodstntcontent.setBackground(new Color(220, 220, 220));
-		txtpnSupportedSearchingmethodstntcontent.setFont(new Font("Dialog", Font.PLAIN, 10));
-		txtpnSupportedSearchingmethodstntcontent.setContentType("text/html");
-		txtpnSupportedSearchingmethodstntcontent.setText("Supported searching methods:<br><br>&emsp;Content Search: Searches the article's main body content.<br><br>&emsp;Title Search: Searches in article's title.<br><br><br>Supported sorting methods:<br><br>&emsp;Sort by Score: Results are sorted by their relevance to the search query.<br><br>&emsp;Sort by Size: Results are sorted based on the article size.<br><br>&emsp;Alphabetical Sort: Results are sorted alphabetically by title.<br><br><br>Query history:<br><br>&emsp;Show history: Retrieves queries from past searches.<br><br><br>Supported queries:<br><br>&emsp;The engine supports keyword, boolean, wildcard and field based queries.<br><br>&emsp;The acceptable fields are title and text.");
-		txtpnSupportedSearchingmethodstntcontent.setBounds(72, 12, 528, 483);
-		panel.add(txtpnSupportedSearchingmethodstntcontent);
-		txtpnSupportedSearchingmethodstntcontent.setVisible(false);
-		txtpnSupportedSearchingmethodstntcontent.setEditable(false);
-		this.txtpnSupportedSearchingmethodstntcontent = txtpnSupportedSearchingmethodstntcontent;
+		JTextPane txtpnSupportedSearchingmethodstntcontent_1 = new JTextPane();
+		txtpnSupportedSearchingmethodstntcontent_1.setForeground(new Color(0, 0, 128));
+		txtpnSupportedSearchingmethodstntcontent_1.setBackground(new Color(220, 220, 220));
+		txtpnSupportedSearchingmethodstntcontent_1.setFont(new Font("Dialog", Font.PLAIN, 10));
+		txtpnSupportedSearchingmethodstntcontent_1.setContentType("text/html");
+		txtpnSupportedSearchingmethodstntcontent_1.setText("Supported searching methods:<br><br>&emsp;Content Search: Searches the article's main body content.<br><br>&emsp;Title Search: Searches in article's title.<br><br><br>Supported sorting methods:<br><br>&emsp;Sort by Score: Results are sorted by their relevance to the search query.<br><br>&emsp;Sort by Size: Results are sorted based on the article size.<br><br>&emsp;Alphabetical Sort: Results are sorted alphabetically by title.<br><br><br>Query history:<br><br>&emsp;Show history: Retrieves queries from past searches.<br><br><br>Supported queries:<br><br>&emsp;The engine supports keyword, boolean, wildcard and field based queries.<br><br>&emsp;The acceptable fields are title and text.");
+		txtpnSupportedSearchingmethodstntcontent_1.setBounds(72, 12, 528, 483);
+		panel.add(txtpnSupportedSearchingmethodstntcontent_1);
+		txtpnSupportedSearchingmethodstntcontent_1.setVisible(false);
+		txtpnSupportedSearchingmethodstntcontent_1.setEditable(false);
+		this.txtpnSupportedSearchingmethodstntcontent = txtpnSupportedSearchingmethodstntcontent_1;
 
 		userInput = new JTextField();
 		userInput.setBounds(100, 62, 881, 29);
@@ -187,9 +177,9 @@ public class SearchEngine {
 				}
 			}
 		});
-		contentSearchBtn.setFont(new Font("Dialog", Font.PLAIN, 11));
+		contentSearchBtn.setFont(new Font("Dialog", Font.BOLD, 12));
 		contentSearchBtn.setBackground(Color.WHITE);
-		contentSearchBtn.setBounds(100, 105, 110, 29);
+		contentSearchBtn.setBounds(100, 105, 122, 39);
 		this.contentSearchBtn = contentSearchBtn;
 		frmWikipediaSearchEngine.getContentPane().add(contentSearchBtn);
 		
@@ -204,9 +194,9 @@ public class SearchEngine {
 				}
 			}
 		});
-		titleSearchBtn.setFont(new Font("Dialog", Font.PLAIN, 11));
+		titleSearchBtn.setFont(new Font("Dialog", Font.BOLD, 12));
 		titleSearchBtn.setBackground(new Color(255, 255, 255));
-		titleSearchBtn.setBounds(248, 105, 110, 29);
+		titleSearchBtn.setBounds(248, 105, 122, 39);
 		this.titleSearchBtn = titleSearchBtn;
 		frmWikipediaSearchEngine.getContentPane().add(titleSearchBtn);
 		
@@ -217,15 +207,16 @@ public class SearchEngine {
 				try {
 					setRetVal(getController().enact("Show History", null));
 					historyArea.setText(getRetVal());
+					historyArea.setCaretPosition(0);
 					historyBtn.setEnabled(false);
 				} catch (IOException | ParseException | InvalidTokenOffsetsException e) {
 					e.printStackTrace();
 				}
 			}
 		});
-		historyBtn.setFont(new Font("Dialog", Font.PLAIN, 11));
+		historyBtn.setFont(new Font("Dialog", Font.BOLD, 12));
 		historyBtn.setBackground(new Color(255, 255, 255));
-		historyBtn.setBounds(389, 105, 110, 29);
+		historyBtn.setBounds(389, 105, 122, 39);
 		this.historyBtn = historyBtn;
 		frmWikipediaSearchEngine.getContentPane().add(historyBtn);
 		
@@ -240,9 +231,9 @@ public class SearchEngine {
 				}
 			}
 		});
-		scoreSortBtn.setFont(new Font("Dialog", Font.PLAIN, 11));
+		scoreSortBtn.setFont(new Font("Dialog", Font.BOLD, 12));
 		scoreSortBtn.setBackground(new Color(255, 255, 255));
-		scoreSortBtn.setBounds(576, 105, 110, 29);
+		scoreSortBtn.setBounds(564, 105, 122, 39);
 		this.scoreSortBtn = scoreSortBtn;
 		frmWikipediaSearchEngine.getContentPane().add(scoreSortBtn);
 		
@@ -257,9 +248,9 @@ public class SearchEngine {
 				}
 			}
 		});
-		sizeSortBtn.setFont(new Font("Dialog", Font.PLAIN, 11));
+		sizeSortBtn.setFont(new Font("Dialog", Font.BOLD, 12));
 		sizeSortBtn.setBackground(new Color(255, 255, 255));
-		sizeSortBtn.setBounds(728, 105, 110, 29);
+		sizeSortBtn.setBounds(716, 105, 122, 39);
 		this.sizeSortBtn = sizeSortBtn;
 		frmWikipediaSearchEngine.getContentPane().add(sizeSortBtn);
 		
@@ -274,9 +265,9 @@ public class SearchEngine {
 				}
 			}
 		});
-		abSortBtn.setFont(new Font("Dialog", Font.PLAIN, 9));
+		abSortBtn.setFont(new Font("Dialog", Font.BOLD, 10));
 		abSortBtn.setBackground(new Color(255, 255, 255));
-		abSortBtn.setBounds(871, 105, 110, 29);
+		abSortBtn.setBounds(859, 105, 122, 39);
 		this.abSortBtn = abSortBtn;
 		frmWikipediaSearchEngine.getContentPane().add(abSortBtn);
 		
@@ -288,14 +279,15 @@ public class SearchEngine {
 					setRetVal(getController().enact("Search", userInput.getText()));
 					resultsArea.setText(getRetVal());
 					resultsArea.setCaretPosition(0);
+					textPane.setText(getController().getCountOfResults() + " articles found");
 				} catch (IOException | ParseException | InvalidTokenOffsetsException e) {
 					e.printStackTrace();
 				}
 			}
 		});
-		searchBtn.setFont(new Font("Dialog", Font.PLAIN, 13));
+		searchBtn.setFont(new Font("Dialog", Font.BOLD, 15));
 		searchBtn.setBackground(new Color(255, 255, 255));
-		searchBtn.setBounds(492, 158, 93, 29);
+		searchBtn.setBounds(483, 158, 111, 39);
 		this.searchBtn = searchBtn;
 		frmWikipediaSearchEngine.getContentPane().add(searchBtn);
 		
@@ -313,7 +305,6 @@ public class SearchEngine {
 		resultsArea_1.addHyperlinkListener(new HyperlinkListener() {
             @Override
             public void hyperlinkUpdate(HyperlinkEvent e) {
-            	
                 if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
                     if (Desktop.isDesktopSupported()) {
                         try {
@@ -342,7 +333,7 @@ public class SearchEngine {
 		lblNewLabel.setForeground(new Color(128, 128, 128));
 		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 15));
 		lblNewLabel.setBackground(new Color(204, 255, 255));
-		lblNewLabel.setBounds(100, 185, 87, 16);
+		lblNewLabel.setBounds(100, 185, 72, 16);
 		frmWikipediaSearchEngine.getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("History");
@@ -360,12 +351,12 @@ public class SearchEngine {
 		frmWikipediaSearchEngine.getContentPane().add(lblNewLabel_2);
 		
 		JButton helpBtn = new JButton("Help");
-		helpBtn.setFont(new Font("Dialog", Font.PLAIN, 13));
+		helpBtn.setFont(new Font("Dialog", Font.BOLD, 13));
 		helpBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				panel.setVisible(true);
-				txtpnSupportedSearchingmethodstntcontent.setVisible(true);
+				txtpnSupportedSearchingmethodstntcontent_1.setVisible(true);
 				closeHelpBtn.setVisible(true);
 				contentSearchBtn.setEnabled(false);
 				titleSearchBtn.setEnabled(false);
@@ -376,22 +367,11 @@ public class SearchEngine {
 				searchBtn.setEnabled(false);
 				historyArea_1.setEnabled(false);
 				resultsArea_1.setEnabled(false);
-				
 			}
 		});
 		helpBtn.setBackground(new Color(255, 255, 255));
-		helpBtn.setBounds(932, 606, 97, 25);
+		helpBtn.setBounds(930, 592, 97, 35);
 		frmWikipediaSearchEngine.getContentPane().add(helpBtn);
-		/*
-		helpBtn.addActionListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event e) {
-				switch (e.type) {
-				case SWT.Selection:
-					//TODO open pop up
-				}
-			}
-		});
-		*/
 		
 		JLabel lblNewLabel_3 = new JLabel("Please insert your query");
 		lblNewLabel_3.setFont(new Font("Dialog", Font.BOLD, 15));
@@ -399,5 +379,13 @@ public class SearchEngine {
 		lblNewLabel_3.setForeground(new Color(128, 128, 128));
 		lblNewLabel_3.setBounds(100, 41, 460, 16);
 		frmWikipediaSearchEngine.getContentPane().add(lblNewLabel_3);
+		
+		JTextPane textPane = new JTextPane();
+		textPane.setForeground(new Color(128, 128, 128));
+		textPane.setFont(new Font("Dialog", Font.PLAIN, 12));
+		textPane.setBackground(new Color(255, 255, 224));
+		textPane.setBounds(100, 580, 132, 25);
+		this.textPane = textPane;
+		frmWikipediaSearchEngine.getContentPane().add(textPane);
 	}
 }
