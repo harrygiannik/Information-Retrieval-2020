@@ -13,10 +13,10 @@ This is a course project for the [Information Retrieval course in UoI](http://ww
 
 ## Screenshots
 
-![home](/screenshots/home.png)
+![home](/screenshots/home.PNG)
 
 
-![search](/screenshots/search.png)
+![search](/screenshots/search.PNG)
 
 
-![help](/screenshots/help.png)
+![help](/screenshots/help.PNG)
