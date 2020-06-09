@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="jar_files/gson-2.6.2.jar"/>
+	<classpathentry kind="lib" path="jar_files/jgoodies-forms-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="jar_files/jgoodies-forms-1.8.0.jar"/>
+	<classpathentry kind="lib" path="jar_files/lucene-core-8.5.1.jar"/>
+	<classpathentry kind="lib" path="jar_files/lucene-highlighter-8.5.1.jar"/>
+	<classpathentry kind="lib" path="jar_files/lucene-memory-8.5.1.jar"/>
+	<classpathentry kind="lib" path="jar_files/lucene-queries-8.5.1.jar"/>
+	<classpathentry kind="lib" path="jar_files/lucene-queryparser-8.5.1.jar"/>
+	<classpathentry kind="lib" path="jar_files/miglayout15-swing.jar"/>
+	<classpathentry kind="lib" path="jar_files/swt.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

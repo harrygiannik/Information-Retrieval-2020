@@ -343,13 +343,6 @@ public class SearchEngine {
 		lblNewLabel_1.setBounds(781, 186, 128, 16);
 		frmWikipediaSearchEngine.getContentPane().add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("Created as a course project for the Information Retrieval course in UoI");
-		lblNewLabel_2.setFont(new Font("Dialog", Font.BOLD, 15));
-		lblNewLabel_2.setBackground(new Color(204, 255, 255));
-		lblNewLabel_2.setForeground(new Color(128, 128, 128));
-		lblNewLabel_2.setBounds(552, 644, 498, 16);
-		frmWikipediaSearchEngine.getContentPane().add(lblNewLabel_2);
-		
 		JButton helpBtn = new JButton("Help");
 		helpBtn.setFont(new Font("Dialog", Font.BOLD, 13));
 		helpBtn.addMouseListener(new MouseAdapter() {
@@ -370,7 +363,7 @@ public class SearchEngine {
 			}
 		});
 		helpBtn.setBackground(new Color(255, 255, 255));
-		helpBtn.setBounds(930, 592, 97, 35);
+		helpBtn.setBounds(930, 606, 97, 35);
 		frmWikipediaSearchEngine.getContentPane().add(helpBtn);
 		
 		JLabel lblNewLabel_3 = new JLabel("Please insert your query");
@@ -387,5 +380,6 @@ public class SearchEngine {
 		textPane.setBounds(100, 580, 132, 25);
 		this.textPane = textPane;
 		frmWikipediaSearchEngine.getContentPane().add(textPane);
+		
 	}
 }
